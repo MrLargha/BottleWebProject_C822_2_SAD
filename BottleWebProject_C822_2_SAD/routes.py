@@ -14,13 +14,33 @@ def home():
         year=datetime.now().year
     )
 
-@route('/contact')
-@view('contact')
-def contact():
-    """Renders the contact page."""
+
+@route('/euler')
+@view('eulerian_loop')
+def euler():
     return dict(
-        title='Contact',
-        message='Your contact page.',
+        title='Эйлеров цикл',
+        message='Задача Дмитрия Повеличенко на поиск Эйлерова цикла',
+        year=datetime.now().year
+    )
+
+
+@route('/subgraph')
+@view('subgraph_search')
+def subgraph():
+    return dict(
+        title='Поиск подграфа в графе',
+        message='Задача Андрея Богданова на поиск подграфа в графе',
+        year=datetime.now().year
+    )
+
+
+@route('/encirclement')
+@view('graph_encirclement')
+def circle():
+    return dict(
+        title='Наибольшее окружение',
+        message='Задача Сергея Пластовца на поиск вершин графа с наибольшим окружением',
         year=datetime.now().year
     )
 
@@ -29,7 +49,7 @@ def contact():
 def about():
     """Renders the about page."""
     return dict(
-        title='About',
-        message='Your application description page.',
+        title='Об авторах',
+        message='Пару слов об авторах этого чудеснейшего сайта',
         year=datetime.now().year
     )
