@@ -1,7 +1,6 @@
 import copy
 import random
 from typing import List
-
 from graph import Graph, GraphNode
 
 big_graph = Graph([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

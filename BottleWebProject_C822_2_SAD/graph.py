@@ -2,6 +2,9 @@ import copy
 from typing import List
 from GraphNode import GraphNode
 import numpy as np
+import networkx as nx
+import matplotlib.pyplot as plt
+import uuid
 
 
 class Graph:
@@ -37,7 +40,7 @@ class Graph:
         return components
 
     def euler_check(self):
-        oddCount = 0;
+        oddCount = 0
         for node in self.nodes:
             oddCount += (node.half_out & 1)
         if oddCount > 2:
@@ -51,8 +54,8 @@ class Graph:
         if len(self.nodes) == 0:
             return res
 
-        if not self.euler_check(graph):
-            return "Граф не является эйлеровым";
+        if not self.euler_check():
+            return "Граф не является эйлеровым"
 
         graph = copy.copy(self.matrix)
 
@@ -74,6 +77,24 @@ class Graph:
                 graph[vert_ind].remove(cur[0])
                 stack_nodes.append([vert_ind, graph[vert_ind]])
         return res
+
+    def save_to_file(self):
+        G = nx.DiGraph()
+        G.add_edges_from(self.get_edges_by_pairs())
+        pos = nx.spring_layout(G)
+        nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'), node_size=500)
+        nx.draw_networkx_labels(G, pos)
+        nx.draw_networkx_edges(G, pos, edge_color='r', arrows=self.oriented)
+        filename = '.\\static\\' + str(uuid.uuid1()).replace('-', '') + '.png'
+        plt.savefig(filename, format="PNG")
+        return filename
+
+    def get_edges_by_pairs(self):
+        result = []
+        for i, row in enumerate(self.matrix):
+            for j, edge in enumerate(row):
+                result.append((str(i + 1), str(j + 1)))
+        return result
 
     @staticmethod
     def __deep_search(start_node: GraphNode):
