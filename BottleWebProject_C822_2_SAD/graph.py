@@ -36,6 +36,45 @@ class Graph:
         self.reset_visited()
         return components
 
+    def euler_check(self):
+        oddCount = 0;
+        for node in self.nodes:
+            oddCount += (node.half_out & 1)
+        if oddCount > 2:
+            return False
+        if self.get_connectivity_components_count() > 1:
+            return False
+        return True
+    
+    def find_euler_loop(self):
+        res = []
+        if len(self.nodes) == 0:
+            return res
+
+        if not self.euler_check(graph):
+            return "Граф не является эйлеровым";
+
+        graph = copy.copy(self.matrix)
+
+        graph = list(map(lambda row: list(map(lambda e: -1 if e[1] == 0 else e[0], enumerate(row))), graph))
+        graph = list(map(lambda row: list(filter(lambda e: e != -1, row)), graph))
+        
+        stack_nodes = [[0, graph[0]]]
+        for i, row in enumerate(graph):
+            if len(row) & 1:
+                stack_nodes[0] = [i, row]
+                break
+        
+        while not (len(stack_nodes) == 0):
+            cur = stack_nodes[len(stack_nodes) - 1]
+            if len(cur[1]) == 0:
+                res.append(stack_nodes.pop()[0])
+            else:
+                vert_ind = cur[1].pop()
+                graph[vert_ind].remove(cur[0])
+                stack_nodes.append([vert_ind, graph[vert_ind]])
+        return res
+
     @staticmethod
     def __deep_search(start_node: GraphNode):
         start_node.visited = True
@@ -48,7 +87,21 @@ class Graph:
 #                [0, 0, 0, 0],
 #                [0, 0, 1, 0],
 #                [0, 0, 0, 1]]
-test_matrix = [[1, 1, 0, 0, 1, 0], [1, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0],
-               [0, 0, 1, 0, 1, 1], [1, 1, 0, 1, 0, 0], [0, 0, 0, 1, 0, 0]]
+# test_matrix = [[1, 1, 0, 0, 1, 0],
+#                [1, 0, 1, 0, 1, 0], 
+#                [0, 1, 0, 1, 0, 0],
+#                [0, 0, 1, 0, 1, 1], 
+#                [1, 1, 0, 1, 0, 0], 
+#                [0, 0, 0, 1, 0, 0]]
+test_matrix = [[0, 1, 1, 0, 1, 1], 
+               [1, 0, 1, 1, 1, 0], 
+               [1, 1, 0, 1, 1, 0], 
+               [0, 1, 1, 0, 1, 1], 
+               [1, 1, 1, 1, 0, 0], 
+               [1, 0, 0, 1, 0, 0]] 
+
 g = Graph(test_matrix)
-print(g.get_connectivity_components_count())
+print(g.find_euler_loop())
+#print(g.get_connectivity_components_count())
+
+

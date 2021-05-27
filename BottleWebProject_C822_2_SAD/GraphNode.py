@@ -20,8 +20,12 @@ class GraphNode:
     def add_edge(self, node: 'GraphNode', edge_len: int):
         self.edges.append((node, edge_len))
 
+    def get_half_out():
+        return self.half_out
+
     def __str__(self):
         return "Node " + str(self.name)
 
     def __repr__(self):
         return "Node " + str(self.name)
+
