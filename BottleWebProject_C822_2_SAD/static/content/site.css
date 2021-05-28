@@ -60,5 +60,22 @@ input[type="checkbox"].input-validation-error {
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
-    resize:none
+    resize: none
+}
+
+.box {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.table-container {
+    padding: 30px;
+    margin: 20px;
+    border: solid #2a6496 5px;
+    border-radius: 20px;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
 }

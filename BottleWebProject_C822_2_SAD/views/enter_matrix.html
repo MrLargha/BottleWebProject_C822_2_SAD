@@ -1,0 +1,27 @@
+% rebase('layout.tpl', title=title, year=year)
+
+<h2>{{title}}</h2>
+<h3>{{ message }}</h3>
+
+<form class="form" method="post" action="/subgraph_matrix_entered">
+    <main class="table-container">
+        <p class="box">
+            <label style="margin-left: 15px; margin-right: 15px"> </label>
+            % for i in range(rows):
+            <label style="margin-left: 15px; margin-right: 15px">{{names[i]}}</label>
+            %end
+        </p>
+
+        % for i in range(rows):
+        <p class="box">
+            <label style="margin-left: 15px; width: 10px">{{names[i]}}</label>
+            % for j in range(columns):
+            <input style="margin: 5px; transform: scale(3); width: 20px" type="checkbox"
+                   name="matrix_cell_{{i*columns + j}}"
+                   id="{{i*columns + j}}">
+            %end
+        </p>
+        %end
+            <button class="nice-button" type="submit" value="Выполнить">Ввести граф</button>
+    </main>
+</form>

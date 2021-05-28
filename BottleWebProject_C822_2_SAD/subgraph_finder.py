@@ -1,9 +1,11 @@
 import copy
 import random
+from datetime import datetime
 from typing import List
 
-from bottle import route, post
+from bottle import route, post, template, request
 
+import request_utils
 from graph import Graph, GraphNode
 
 big_graph = Graph([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -71,4 +73,13 @@ def find(origin_graph):
 
 @post('/subgraph_search', method='post')
 def search():
-    pass
+    matrix_dim = int(request.forms.get("MATRIX"))
+    return template('enter_matrix', title='Поиск подграфа в графе',
+                    message='Задача Андрея Богданова на поиск подграфа в графе',
+                    year=datetime.now().year, rows=matrix_dim, columns=matrix_dim,
+                    names=Graph.get_nodes_names(matrix_dim))
+
+
+@post('/subgraph_matrix_entered', method='post')
+def solve():
+    request_utils.extract_matrix_from_request_params(request.forms)
