@@ -6,7 +6,8 @@ import bottle
 import os
 import sys
 
-import graph
+import graph_show
+import subgraph_finder
 
 # routes contains the HTTP handlers for our server and must be imported.
 import routes

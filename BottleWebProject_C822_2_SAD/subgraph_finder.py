@@ -2,6 +2,8 @@ import copy
 import random
 from typing import List
 
+from bottle import route, post
+
 from graph import Graph, GraphNode
 
 big_graph = Graph([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -67,11 +69,6 @@ def find(origin_graph):
         extend(c, [])
 
 
-find(big_graph)
-print("Found " + str(len(clicks)) + " clicks:")
-print(clicks)
-
-clicks5 = list(filter(lambda x: len(x) == 5, clicks))
-
-print("Found " + str(len(clicks5)) + " 5-size clicks:")
-print(clicks5)
+@post('/subgraph_search', method='post')
+def search():
+    pass
