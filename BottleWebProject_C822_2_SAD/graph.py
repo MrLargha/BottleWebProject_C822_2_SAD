@@ -39,9 +39,8 @@ class Graph:
     def euler_check(self):
         oddCount = 0;
         for node in self.nodes:
-            oddCount += (node.half_out & 1)
-        if oddCount > 2:
-            return False
+            if node.half_out & 1:
+                return False
         if self.get_connectivity_components_count() > 1:
             return False
         return True
@@ -51,8 +50,8 @@ class Graph:
         if len(self.nodes) == 0:
             return res
 
-        if not self.euler_check(graph):
-            return "Граф не является эйлеровым";
+        if not self.euler_check():
+            return "Граф не является эйлеровым"
 
         graph = copy.copy(self.matrix)
 
@@ -102,6 +101,3 @@ test_matrix = [[0, 1, 1, 0, 1, 1],
 
 g = Graph(test_matrix)
 print(g.find_euler_loop())
-#print(g.get_connectivity_components_count())
-
-
