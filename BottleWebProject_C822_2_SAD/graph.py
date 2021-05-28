@@ -48,7 +48,20 @@ class Graph:
 #                [0, 0, 0, 0],
 #                [0, 0, 1, 0],
 #                [0, 0, 0, 1]]
+def dfs(start_node: GraphNode):
+    start_node.visited = True
+    for node, _ in start_node.edges:
+        print("Проверяем вершину %s на соседей" % node)
+        if not node.visited and node is not start_node:
+            print("Цикл %s начат" % node)
+            dfs(node)
+
+
+
 test_matrix = [[1, 1, 0, 0, 1, 0], [1, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 0],
                [0, 0, 1, 0, 1, 1], [1, 1, 0, 1, 0, 0], [0, 0, 0, 1, 0, 0]]
 g = Graph(test_matrix)
-print(g.get_connectivity_components_count())
+
+dfs(g.nodes[0])
+
+
