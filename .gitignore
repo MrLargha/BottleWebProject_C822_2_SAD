@@ -338,3 +338,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+# Virtual environments
+BottleWebProject_C822_2_SAD/env*
