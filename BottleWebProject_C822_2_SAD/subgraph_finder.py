@@ -1,10 +1,7 @@
 import copy
-import random
 from datetime import datetime
 from typing import List
-
 from bottle import route, post, template, request
-
 import request_utils
 from graph import Graph, GraphNode
 
@@ -23,7 +20,6 @@ big_graph = Graph([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                    [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1],
                    [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1],
                    [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0]])
-
 compsub: List[GraphNode] = []
 clicks: List[List[GraphNode]] = []
 
@@ -45,9 +41,8 @@ def extend(candidates: List[GraphNode], not_candidates: List[GraphNode]):
         compsub.append(v)
         new_candidates = list(filter(lambda node: node.connected_to(v), candidates))
         new_not_candidates = list(filter(lambda node: node.connected_to(v), not_candidates))
-        print(compsub)
         if len(new_not_candidates) == 0 and len(new_candidates) == 0:
-            clicks.append(copy.copy(compsub))
+            clicks.append(compsub.copy())
             print("Click found" + str(clicks))
         else:
             extend(new_candidates, new_not_candidates)
@@ -66,9 +61,10 @@ def check_full(graph: Graph):
 
 # Вывести вхождения подграфа в граф
 def find(origin_graph):
-    c = origin_graph.nodes
+    c = origin_graph.nodes.copy()
     while len(c) > 0:
         extend(c, [])
+    compsub.clear()
 
 
 @post('/subgraph_search', method='post')
@@ -77,9 +73,22 @@ def search():
     return template('enter_matrix', title='Поиск подграфа в графе',
                     message='Задача Андрея Богданова на поиск подграфа в графе',
                     year=datetime.now().year, rows=matrix_dim, columns=matrix_dim,
-                    names=Graph.get_nodes_names(matrix_dim))
+                    names=Graph.get_nodes_names(matrix_dim),
+                    callback='subgraph_matrix_entered',
+                    yarus=-1)
 
 
 @post('/subgraph_matrix_entered', method='post')
 def solve():
-    request_utils.extract_matrix_from_request_params(request.forms)
+    matrix = request_utils.extract_matrix_from_request_params(request.forms)
+    g = Graph(matrix)
+    find(g)
+    result = list(filter(lambda x: len(x) == 5, clicks.copy()))
+    clicks.clear()
+    print(result)
+    for i, click in enumerate(result):
+        for node in click:
+            node.name += " " + 'Click ' + str(i) + ';'
+    path = g.save_to_file()
+    return template('subgraph_view', title='Результат поиска подгафов', subgraph_count=len(result),
+                    image_path=path)

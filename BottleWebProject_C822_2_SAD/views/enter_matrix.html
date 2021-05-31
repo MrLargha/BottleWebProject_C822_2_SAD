@@ -3,7 +3,7 @@
 <h2>{{title}}</h2>
 <h3>{{ message }}</h3>
 
-<form class="form" method="post" action="/subgraph_matrix_entered">
+<form class="form" method="post" action="/{{callback}}">
     <main class="table-container">
         <p class="box">
             <label style="margin-left: 15px; margin-right: 15px"> </label>
@@ -18,10 +18,12 @@
             % for j in range(columns):
             <input style="margin: 5px; transform: scale(3); width: 20px" type="checkbox"
                    name="matrix_cell_{{i*columns + j}}"
-                   id="{{i*columns + j}}">
+                   id="{{i*columns + j}}" {{"disabled" if j < i else ""}}>
             %end
         </p>
         %end
-            <button class="nice-button" type="submit" value="Выполнить">Ввести граф</button>
+        <button class="nice-button" type="submit" value="Выполнить">Ввести граф</button>
+        <input type="hidden" name="matrix_size" value="{{columns}}">
+        <input type="hidden" name="sergey_yarus" value="{{yarus}}">
     </main>
 </form>

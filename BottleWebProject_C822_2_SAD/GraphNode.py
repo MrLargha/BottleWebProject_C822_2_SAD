@@ -26,9 +26,10 @@ class GraphNode:
                 return False
         return True
 
+    # Always return false for itself to prevent infinity recursion
     def connected_to(self, node: 'GraphNode'):
         for edge in self.edges:
-            if edge[0] == node:
+            if edge[0] == node and node != self:
                 return True
         return False
 
@@ -37,4 +38,5 @@ class GraphNode:
 
     def __repr__(self):
         return "Node " + str(self.name)
+
 
