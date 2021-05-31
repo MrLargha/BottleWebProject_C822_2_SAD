@@ -1,9 +1,8 @@
-from random import randint
 from graph import Graph
 import GraphNode
 import numpy as np
 
-def find_peak_with_max_environment(matrix : Graph, peak_count, level_count):
+def find_peak_with_max_env(matrix : Graph, peak_count, level_count):
     #level_count=int(input("введите число ярусов: "))
     ones_matrix=np.eye(peak_count) #вводится число вершин
     one_bool=np.array(ones_matrix, dtype=bool)
@@ -33,25 +32,7 @@ def find_peak_with_max_environment(matrix : Graph, peak_count, level_count):
     for i in range(0, len(list_with_env)):
         if list_with_env[i]==max_elem:
             point_with_max_environment.append(i+1)       
-    print(answer_matrix)
-    print("Вершины с максимальным окружением: " + str(point_with_max_environment))
+    #print(answer_matrix)
+    #print("Вершины с максимальным окружением: " + str(point_with_max_environment))
+    return answer_matrix, point_with_max_environment
 
-test_matrix = [[0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-g=Graph(test_matrix)
-find_peak_with_max_environment(g.matrix,len(g.nodes), 3)

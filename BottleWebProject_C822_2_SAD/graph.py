@@ -143,5 +143,4 @@ if __name__ == '__main__':
                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                    [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-g = Graph(test_matrix)
-print(g.find_euler_loop())
+    g = Graph(test_matrix)
