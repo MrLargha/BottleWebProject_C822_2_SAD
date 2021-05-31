@@ -85,12 +85,15 @@ class Graph:
     def save_to_file(self):
         G = nx.DiGraph()
         G.add_edges_from(self.get_edges_by_pairs())
-        pos = nx.spring_layout(G)
-        nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'), node_size=500)
+        pos = nx.shell_layout(G)
+        nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'), node_size=500, node_color='#8bc34a')
         nx.draw_networkx_labels(G, pos)
         nx.draw_networkx_edges(G, pos, edge_color='r', arrows=self.oriented)
         filename = '.\\static\\' + str(uuid.uuid1()).replace('-', '') + '.png'
-        plt.savefig(filename, format="PNG")
+        fig: plt.Figure = plt.gcf()
+        fig.set_size_inches(12, 12)
+        plt.savefig(filename, format="PNG", )
+        plt.clf()
         return filename
 
     def get_edges_by_pairs(self):
@@ -98,7 +101,7 @@ class Graph:
         for i, row in enumerate(self.matrix):
             for j, edge in enumerate(row):
                 if edge > 0:
-                    result.append((str(i + 1), str(j + 1)))
+                    result.append((self.nodes[i].name, self.nodes[j].name))
         return result
 
     @staticmethod
