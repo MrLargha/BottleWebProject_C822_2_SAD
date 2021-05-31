@@ -2,3 +2,13 @@
 
 <h2>{{ title }}.</h2>
 <h3>{{ message }}</h3>
+
+<form class="form" method="post" action="/subgraph_search">
+    <label>
+        <p style="padding-top: 50px">Матрица смежности графа</p>
+        <textarea class="nice-text-area" rows="15" cols="60" name="MATRIX"></textarea>
+    </label>
+    <p>
+        <button class="nice-button" type="submit" value="Выполнить">Найти подграфы</button>
+    </p>
+</form>
