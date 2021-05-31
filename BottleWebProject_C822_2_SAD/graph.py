@@ -71,8 +71,8 @@ class Graph:
 
         graph = copy.copy(self.matrix)
 
-        graph = list(map(lambda row: list(map(lambda e: -1 if e[1] == 0 else e[0], enumerate(row))), graph))
-        graph = list(map(lambda row: list(filter(lambda e: e != -1, row)), graph))
+        graph = list(map(lambda row: map(lambda e: -1 if e[1] == 0 else e[0], enumerate(row)), graph))
+        graph = list(map(lambda row: filter(lambda e: e != -1, row), graph))
 
         stack_nodes = [[0, graph[0]]]
         for i, row in enumerate(graph):
@@ -90,13 +90,15 @@ class Graph:
                 stack_nodes.append([vert_ind, graph[vert_ind]])
         return res
 
-    def save_to_file(self):
+    def save_to_file(self, edge_colors=None):
+        if edge_colors is None:
+            edge_colors = ['r']
         G = nx.DiGraph()
         G.add_edges_from(self.get_edges_by_pairs())
         pos = nx.shell_layout(G)
-        nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'), node_size=500, node_color='#8bc34a')
+        nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'), node_size=3000, node_color='#8bc34a')
         nx.draw_networkx_labels(G, pos)
-        nx.draw_networkx_edges(G, pos, edge_color='r', arrows=self.oriented)
+        nx.draw_networkx_edges(G, pos, edge_color=edge_colors, arrows=self.oriented)
         filename = '.\\static\\' + str(uuid.uuid1()).replace('-', '') + '.png'
         fig: plt.Figure = plt.gcf()
         fig.set_size_inches(12, 12)
