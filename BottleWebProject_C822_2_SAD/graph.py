@@ -82,6 +82,7 @@ class Graph:
                 stack_nodes.append([vert_ind, graph[vert_ind]])
         return res
 
+    
     def save_to_file(self):
         G = nx.DiGraph()
         G.add_edges_from(self.get_edges_by_pairs())
@@ -145,5 +146,5 @@ if __name__ == '__main__':
                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                    [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-    g = Graph(test_matrix)
-    g.save_to_file()
+g = Graph(test_matrix)
+print(g.find_euler_loop())
