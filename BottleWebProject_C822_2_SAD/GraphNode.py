@@ -4,7 +4,7 @@ from typing import TypeVar
 
 class GraphNode:
     def __init__(self, name):
-        self.name = int(name) - 1
+        self.name = name
         self.edges: List[Tuple[GraphNode, int]] = []
         self.visited = False
 
