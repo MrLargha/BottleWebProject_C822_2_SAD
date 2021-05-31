@@ -21,6 +21,16 @@ class Graph:
             self.nodes[i].half_in = len(list(filter(lambda x: x > 0, row)))
         self.oriented = not (np.array(adjacency_matrix) == np.array(adjacency_matrix).T).all()
 
+    @staticmethod
+    def create_from_path(path):
+        count = max(path) + 1
+        mat = np.zeros((count, count), dtype=int)
+        l = path[0]
+        for e in path[1:]:
+            mat[l][e] = 1
+            l = e
+        return Graph(mat)
+
     """Установить в false все отметки visited"""
 
     def reset_visited(self):
@@ -44,11 +54,9 @@ class Graph:
         return components
 
     def euler_check(self):
-        oddCount = 0
         for node in self.nodes:
-            oddCount += (node.half_out & 1)
-        if oddCount > 2:
-            return False
+            if (node.half_out + node.half_in) & 1:
+                return False
         if self.get_connectivity_components_count() > 1:
             return False
         return True
@@ -82,7 +90,6 @@ class Graph:
                 stack_nodes.append([vert_ind, graph[vert_ind]])
         return res
 
-    
     def save_to_file(self):
         G = nx.DiGraph()
         G.add_edges_from(self.get_edges_by_pairs())
@@ -118,33 +125,12 @@ class Graph:
 
 
 if __name__ == '__main__':
-    # test_matrix = [[0, 1, 0, 0],
-    #                [0, 0, 0, 0],
-    #                [0, 0, 1, 0],
-    #                [0, 0, 0, 1]]
-    # test_matrix = [[1, 1, 0, 0, 1, 0],
-    #                [1, 0, 1, 0, 1, 0],
-    #                [0, 1, 0, 1, 0, 0],
-    #                [0, 0, 1, 0, 1, 1],
-    #                [1, 1, 0, 1, 0, 0],
-    #                [0, 0, 0, 1, 0, 0]]
-    test_matrix = [[0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                   [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0],
-                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                   [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]]
-
-g = Graph(test_matrix)
-print(g.find_euler_loop())
+    test_matrix = [[0, 1, 1, 0, 1, 1],
+                   [1, 0, 1, 1, 1, 0],
+                   [1, 1, 0, 1, 1, 0],
+                   [0, 1, 1, 0, 1, 1],
+                   [1, 1, 1, 1, 0, 0],
+                   [1, 0, 0, 1, 0, 0]]
+    g = Graph.create_from_path(Graph(test_matrix).find_euler_loop())
+    #print(Graph(test_matrix).find_euler_loop())
+    g.save_to_file()
