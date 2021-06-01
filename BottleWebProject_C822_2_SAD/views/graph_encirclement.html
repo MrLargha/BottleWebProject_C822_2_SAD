@@ -2,3 +2,19 @@
 
 <h2>{{ title }}.</h2>
 <h3>{{ message }}</h3>
+
+<form class="form" method="post" action="/graph_encirclement">
+    <label>
+        <p style="padding-top: 50px">Количество вершин графа</p>
+        <input type="number" class="nice-text-area" name="MATRIX">
+    </label>
+    <label>
+        <p style="padding-top: 50px">Количество ярусов (ребер)</p>
+        <p><input type="text" , class="nice-text-area" name="LEVEL"></p>
+    </label>
+    <p>
+        <button class="nice-button" type="submit" value="Выполнить">Ввести граф</button>
+    </p>
+</form>
+
+

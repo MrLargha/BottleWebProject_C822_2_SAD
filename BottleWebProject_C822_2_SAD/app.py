@@ -8,6 +8,7 @@ import sys
 
 import graph_show
 import subgraph_finder
+import find_peak_with_max_environment
 
 # routes contains the HTTP handlers for our server and must be imported.
 import routes
