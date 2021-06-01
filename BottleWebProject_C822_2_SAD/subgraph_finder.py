@@ -5,7 +5,7 @@ from bottle import route, post, template, request
 import request_utils
 from graph import Graph, GraphNode
 
-big_graph = Graph([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+big_graph = Graph([[0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
                    [1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0],
                    [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
                    [1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0],
@@ -20,8 +20,11 @@ big_graph = Graph([[0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                    [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1],
                    [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1],
                    [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0]])
+
 compsub: List[GraphNode] = []
 clicks: List[List[GraphNode]] = []
+click_colors = ['#fc1100', '#ffea00', '#07f52b', '#6ed4d2', '#031682', '#9d0be6', '#ff05e2', '#730813',
+                '#7d3102', '#588061']
 
 
 def contains_all_connected(target: List[GraphNode], search_in: List[GraphNode]):
@@ -61,7 +64,7 @@ def check_full(graph: Graph):
 
 # Вывести вхождения подграфа в граф
 def find(origin_graph):
-    c = origin_graph.nodes.copy()
+    c = big_graph.nodes.copy()
     while len(c) > 0:
         extend(c, [])
     compsub.clear()
@@ -81,14 +84,26 @@ def search():
 @post('/subgraph_matrix_entered', method='post')
 def solve():
     matrix = request_utils.extract_matrix_from_request_params(request.forms)
-    g = Graph(matrix)
+    # g = Graph(matrix)
+    g = big_graph
     find(g)
     result = list(filter(lambda x: len(x) == 5, clicks.copy()))
     clicks.clear()
     print(result)
+    edges = g.get_edges_by_pairs()
+    colors = []
+    for edge1, edge2 in edges:
+        color = '#000000'
+        for i, click in enumerate(result):
+            color_n = i % len(click_colors)
+            if edge1 in map(lambda x: x.name, click) and edge2 in map(lambda x: x.name, click):
+                color = click_colors[color_n]
+        colors.append(color)
     for i, click in enumerate(result):
         for node in click:
-            node.name += " " + 'Click ' + str(i) + ';'
-    path = g.save_to_file()
+            if 'SG' not in node.name:
+                node.name += "\nSG:"
+            node.name += ' ' + str(i) + ';'
+    path = g.save_to_file(colors)
     return template('subgraph_view', title='Результат поиска подгафов', subgraph_count=len(result),
                     image_path=path)
