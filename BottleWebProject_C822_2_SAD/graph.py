@@ -37,11 +37,13 @@ class Graph:
         for node in self.nodes:
             node.visited = False
 
-    """Стереть метаданные """
+    """Стереть метаданные"""
 
     def reset_metadata(self):
         for node in self.nodes:
             node.metadata = []
+
+    """Вернуть количество компонент связности"""
 
     def get_connectivity_components_count(self):
         components = 0
@@ -53,52 +55,15 @@ class Graph:
         self.reset_visited()
         return components
 
-    def euler_check(self):
-        for node in self.nodes:
-            if (node.half_out + node.half_in) & 1:
-                return False
-        if self.get_connectivity_components_count() > 1:
-            return False
-        return True
+    """Сохранить граф в файл"""
 
-    def find_euler_loop(self):
-        res = []
-        if len(self.nodes) == 0:
-            return res
-
-        if not self.euler_check():
-            return "Граф не является эйлеровым"
-
-        graph = copy.copy(self.matrix)
-
-        graph = list(map(lambda row: map(lambda e: -1 if e[1] == 0 else e[0], enumerate(row)), graph))
-        graph = list(map(lambda row: filter(lambda e: e != -1, row), graph))
-
-        stack_nodes = [[0, graph[0]]]
-        for i, row in enumerate(graph):
-            if len(row) & 1:
-                stack_nodes[0] = [i, row]
-                break
-
-        while not (len(stack_nodes) == 0):
-            cur = stack_nodes[len(stack_nodes) - 1]
-            if len(cur[1]) == 0:
-                res.append(stack_nodes.pop()[0])
-            else:
-                vert_ind = cur[1].pop()
-                graph[vert_ind].remove(cur[0])
-                stack_nodes.append([vert_ind, graph[vert_ind]])
-        return res
-
-    def save_to_file(self, edge_colors=None, size=12):
-        if edge_colors is None:
-            edge_colors = ['r']
+    def save_to_file(self, size_of_node=3000):
         G = nx.DiGraph()
         G.add_edges_from(self.get_edges_by_pairs())
         pos = nx.shell_layout(G)
-        nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'), node_size=3000, node_color='#8bc34a',)
-        nx.draw_networkx_labels(G, pos, font_size=size)
-        nx.draw_networkx_edges(G, pos, edge_color=edge_colors, arrows=self.oriented)
+        nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'), node_size=size_of_node, node_color='#8bc34a')
+        nx.draw_networkx_labels(G, pos)
+        nx.draw_networkx_edges(G, pos, edge_color="r", arrows=self.oriented)
         filename = '.\\static\\' + str(uuid.uuid1()).replace('-', '') + '.png'
         fig: plt.Figure = plt.gcf()
         fig.set_size_inches(12, 12)
