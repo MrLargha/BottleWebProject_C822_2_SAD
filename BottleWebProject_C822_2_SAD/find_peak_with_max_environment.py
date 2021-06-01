@@ -50,7 +50,7 @@ def find_peak_with_max_env():
     result_peak=str(point_with_max_environment)
     result_peak=result_peak[1:-1]
     return template('graph_encirclement_view', title='Результат поиска вершин с максимальным окружением', peak_count=result_peak,
-                    image_path=path, year=datetime.now().year)
+                    image_path=path, year=datetime.now().year, ach_mtx=answer_matrix)
 
 
 @post('/graph_encirclement', method='post')

@@ -4,5 +4,19 @@
 <h3>Вершины с максимальным окружением: {{peak_count}} </h3>
 
 
-<img src="{{image_path}}" width="700" height="700"/>
 
+<div class="element-position-GE">
+    <div>
+        <img src="{{image_path}}" width="700" height="700" />
+    </div>
+    <div>
+        <table class="table-achievment">
+            %for i in range(0, len(ach_mtx)):
+            <tr></tr>
+                %for j in range(0, len(ach_mtx)):
+                <th class="table-achievment">{{ach_mtx[i,j]}}</th>
+                %end
+            %end
+        </table>
+    </div>
+</div>
