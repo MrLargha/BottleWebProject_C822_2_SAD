@@ -16,7 +16,8 @@ def find_peak_with_max_env():
     level_count = int(request.forms.get("sergey_yarus"))#полчения числа ярусов
     peak_count=len(g.nodes)#получение числа вершин
     ones_matrix=np.eye(peak_count) #создание единичной матрицы
-
+    if level_count<0 or peak_count<0:
+        return template('error')
     """Сделать страницы с выводом ошибки!"""
     one_bool=np.array(ones_matrix, dtype=bool)#преобразование ее в булеву матрицу для дальнейших операций
     total_bool_matrix=[]    #общая булева матрица
