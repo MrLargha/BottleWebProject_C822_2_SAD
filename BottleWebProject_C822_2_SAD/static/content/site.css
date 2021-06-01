@@ -79,3 +79,10 @@ input[type="checkbox"].input-validation-error {
     display: flex;
     justify-content: space-between;
 }
+.element-position-GE {
+    display: flex;
+    justify-content: space-around
+}
+.table-achievment {
+    border: 1px solid black;
+}
