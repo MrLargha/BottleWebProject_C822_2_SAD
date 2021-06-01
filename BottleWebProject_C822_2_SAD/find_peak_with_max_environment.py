@@ -46,7 +46,7 @@ def find_peak_with_max_env():
     for i in range(0, len(list_with_env)):
         if list_with_env[i]==max_elem:
             point_with_max_environment.append(i+1)       
-    path = g.save_to_file()
+    path = g.save_to_file(size=30)
     result_peak=str(point_with_max_environment)
     result_peak=result_peak[1:-1]
     return template('graph_encirclement_view', title='Результат поиска вершин с максимальным окружением', peak_count=result_peak,

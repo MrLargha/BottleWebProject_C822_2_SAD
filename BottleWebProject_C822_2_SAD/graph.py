@@ -90,14 +90,14 @@ class Graph:
                 stack_nodes.append([vert_ind, graph[vert_ind]])
         return res
 
-    def save_to_file(self, edge_colors=None):
+    def save_to_file(self, edge_colors=None, size=12):
         if edge_colors is None:
             edge_colors = ['r']
         G = nx.DiGraph()
         G.add_edges_from(self.get_edges_by_pairs())
         pos = nx.shell_layout(G)
-        nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'), node_size=3000, node_color='#8bc34a')
-        nx.draw_networkx_labels(G, pos)
+        nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'), node_size=3000, node_color='#8bc34a',)
+        nx.draw_networkx_labels(G, pos, font_size=size)
         nx.draw_networkx_edges(G, pos, edge_color=edge_colors, arrows=self.oriented)
         filename = '.\\static\\' + str(uuid.uuid1()).replace('-', '') + '.png'
         fig: plt.Figure = plt.gcf()
