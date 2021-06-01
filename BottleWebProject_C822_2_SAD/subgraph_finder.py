@@ -5,9 +5,9 @@ from bottle import route, post, template, request
 import request_utils
 from graph import Graph, GraphNode
 
-big_graph = Graph([[0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-                   [1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0],
-                   [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
+big_graph = Graph([[1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+                   [1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+                   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0],
                    [1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0],
                    [1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0],
                    [0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0],
@@ -72,7 +72,10 @@ def find(origin_graph):
 
 @post('/subgraph_search', method='post')
 def search():
-    matrix_dim = int(request.forms.get("MATRIX"))
+    try:
+        matrix_dim = int(request.forms.get("MATRIX"))
+    except ValueError:
+        return template('error', message='Введите кол-во вершин в графе!')
     return template('enter_matrix', title='Поиск подграфа в графе',
                     message='Задача Андрея Богданова на поиск подграфа в графе',
                     year=datetime.now().year, rows=matrix_dim, columns=matrix_dim,
@@ -96,7 +99,7 @@ def solve():
         color = '#000000'
         for i, click in enumerate(result):
             color_n = i % len(click_colors)
-            if edge1 in map(lambda x: x.name, click) and edge2 in map(lambda x: x.name, click):
+            if edge1 in map(lambda x: x.name, click) and edge2 in map(lambda x: x.name, click) and edge1 is not edge2:
                 color = click_colors[color_n]
         colors.append(color)
     for i, click in enumerate(result):
