@@ -29,8 +29,8 @@ def euler():
 @view('subgraph_search')
 def subgraph():
     return dict(
-        title='Поиск подграфа в графе',
-        message='Задача Андрея Богданова на поиск подграфа в графе',
+        title='Поиск полных подграфов',
+        message='Задача на поиск полных подграфов из 5 вершин в графе',
         year=datetime.now().year
     )
 
