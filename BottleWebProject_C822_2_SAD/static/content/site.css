@@ -116,3 +116,7 @@ input[type="checkbox"].input-validation-error {
     border: 1px solid black;
     font-size: 20px;   
 }
+.image-position {
+    display: flex;
+    justify-content: center;
+}

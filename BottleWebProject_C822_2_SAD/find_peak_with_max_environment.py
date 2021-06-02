@@ -56,14 +56,17 @@ def search():
     try:
         matrix_dim = int(request.forms.get("MATRIX"))
         level_count = int(request.forms.get("LEVEL"))
+        int_nodes_name=[]
+        for i in range(0, matrix_dim):
+            int_nodes_name.append(i+1)
         if level_count<0:
             return template('error', message='Число ярусов не может быть меньше 0! Попробуйте еще раз!')
     except ValueError:
         return template('error', message='Введите кол-во вершин в графе!')
     return template('enter_matrix', title='Поиск вершин с максимальным окружением',
-                    message='Задача Сергея Пластовца на поиск вершин с максимальным окружением',
+                    message='Перед вами матрица смежности вашего графа. Отметьте те клетки, на пересечении которых существует связь',
                     year=datetime.now().year, rows=matrix_dim, columns=matrix_dim,
-                    names=Graph.get_nodes_names(matrix_dim),
+                    names=int_nodes_name,
                     callback='find_peak_with_max_environment',
                     yarus=level_count)
 
