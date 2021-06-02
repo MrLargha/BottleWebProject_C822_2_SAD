@@ -4,7 +4,7 @@ from graph import Graph
 
 def euler_check(cur_graph: Graph):
     for node in cur_graph.nodes:
-        if (node.half_out & 1) and (not node.connected_to(node, True)):
+        if (node.half_out - node.connected_to(node, True)) & 1:
             return False
     if cur_graph.get_connectivity_components_count() > 1:
         return False
@@ -17,7 +17,7 @@ def find_euler_loop(cur_graph: Graph):
         return res
 
     if not euler_check(cur_graph):
-        return "Граф не является эйлеровым"
+        return "Эйлерового цикла не существует!"
 
     graph = copy.copy(cur_graph.matrix)
 
