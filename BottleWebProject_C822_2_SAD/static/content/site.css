@@ -116,6 +116,7 @@ input[type="checkbox"].input-validation-error {
 
 .table-achievment {
     border: 1px solid black;
+    font-size: 20px;
 }
 
 .result-card {
@@ -124,4 +125,10 @@ input[type="checkbox"].input-validation-error {
     border-radius: 5px;
     padding: 10px;
     margin: 10px;
+}
+ 
+
+.image-position {
+    display: flex;
+    justify-content: center;
 }
