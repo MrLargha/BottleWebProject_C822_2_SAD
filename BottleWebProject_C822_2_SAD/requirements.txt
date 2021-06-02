@@ -1,3 +1,5 @@
 bottle~=0.12
 
 numpy~=1.20.3
+networkx~=2.6rc1
+matplotlib~=3.4.2
