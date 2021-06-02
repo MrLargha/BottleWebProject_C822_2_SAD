@@ -29,7 +29,7 @@
     <p>Матрица достижимости = Е v A v A^2 v A^3</p>
 
 <h4 style="margin-top: 30px">Начало работы: </h4>
-<p>Для того, чтобы начать работу с данным алгоритмом, необходимо ввести следующие данные: число вершин (не меньше нуля и не болье 26)
+<p>Для того, чтобы начать работу с данным алгоритмом, необходимо ввести следующие данные: число вершин (не меньше нуля и не больше 23)
     и число ярусов (число не может быть меньше 0).</p>
 <p>Для ввода графа используется матрица смежности графа. Для заполнения матрицы необходимо выбрать те клетки, где на пересечении строк и столбцов существует связь, т.е.</p>
 <p>eсли граф выглядит так</p>
@@ -41,11 +41,11 @@
 <form class="form" method="post" action="/graph_encirclement">
     <label>
         <p style="padding-top: 50px">Количество вершин графа</p>
-        <input type="number" class="nice-text-area" name="MATRIX">
+        <input style="padding: 15px" type="number" class="nice-text-area" name="MATRIX" max="23" min="1">
     </label>
     <label>
         <p style="padding-top: 50px">Количество ярусов (ребер)</p>
-        <p><input type="text" , class="nice-text-area" name="LEVEL"></p>
+        <p><input style="padding: 15px" type="number" class="nice-text-area" name="LEVEL" min="1"></p>
     </label>
     <p>
         <button class="nice-button" type="submit" value="Выполнить">Ввести граф</button>

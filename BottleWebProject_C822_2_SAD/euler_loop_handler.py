@@ -12,9 +12,6 @@ def search():
     except:
         return template("error", message='Количество вершин не введено!')
 
-    if matrix_dim < 1:
-        return template("error", message='Вершин должно быть не меньше одной!')
-
     return template('enter_matrix', title='Поиск эйлерового цикла в графе',
                     message='Задача Дмитрия Повеличенко на поиск эйлерового цикла в графе',
                     year=datetime.now().year, rows=matrix_dim, columns=matrix_dim,

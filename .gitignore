@@ -341,3 +341,4 @@ healthchecksdb
 
 # Virtual environments
 BottleWebProject_C822_2_SAD/env*
+/venv/
