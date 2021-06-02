@@ -1,6 +1,5 @@
 import copy
 import string
-from typing import List
 from GraphNode import GraphNode
 import numpy as np
 import networkx as nx
@@ -9,7 +8,30 @@ import uuid
 
 
 class Graph:
-    def __init__(self, adjacency_matrix: List[List[int]]):
+    @staticmethod
+    def __deep_search(start_node: GraphNode):
+        start_node.visited = True
+        for node, _ in start_node.edges:
+            if not node.visited and node is not start_node:
+                Graph.__deep_search(node)
+
+    """Получить заглавные буквы для названий вершин"""
+    @staticmethod
+    def get_nodes_names(count):
+        return string.ascii_uppercase[:count]
+
+    """Создать граф из пути"""
+    @staticmethod
+    def create_from_path(path):
+        count = max(path) + 1
+        mat = np.zeros((count, count), dtype=int)
+        l = path[0]
+        for e in path[1:]:
+            mat[l][e] = 1
+            l = e
+        return Graph(mat)
+
+    def __init__(self, adjacency_matrix):
         names = Graph.get_nodes_names(len(adjacency_matrix))
         self.nodes = [GraphNode(names[i]) for i in range(len(adjacency_matrix))]
         self.matrix = copy.copy(adjacency_matrix)
@@ -20,16 +42,6 @@ class Graph:
         for i, row in enumerate(np.array(self.matrix).T):
             self.nodes[i].half_in = len(list(filter(lambda x: x > 0, row)))
         self.oriented = not (np.array(adjacency_matrix) == np.array(adjacency_matrix).T).all()
-
-    @staticmethod
-    def create_from_path(path):
-        count = max(path) + 1
-        mat = np.zeros((count, count), dtype=int)
-        l = path[0]
-        for e in path[1:]:
-            mat[l][e] = 1
-            l = e
-        return Graph(mat)
 
     """Установить в false все отметки visited"""
     def reset_visited(self):
@@ -72,21 +84,14 @@ class Graph:
         plt.clf()
         return filename
 
+    """Получить вершины попарно, для неориентированного графа вершины не будут продублированы"""
     def get_edges_by_pairs(self):
         result = []
         for i, row in enumerate(self.matrix):
             for j, edge in enumerate(row):
-                if edge > 0:
-                    result.append((self.nodes[i].name, self.nodes[j].name))
+                new_pair = (self.nodes[i].name, self.nodes[j].name)
+                if edge > 0 and (self.oriented or (tuple(reversed(new_pair)) not in result)):
+                    result.append(new_pair)
         return result
 
-    @staticmethod
-    def __deep_search(start_node: GraphNode):
-        start_node.visited = True
-        for node, _ in start_node.edges:
-            if not node.visited and node is not start_node:
-                Graph.__deep_search(node)
 
-    @staticmethod
-    def get_nodes_names(count):
-        return string.ascii_uppercase[:count]
