@@ -108,5 +108,5 @@ def solve():
                 node.name += "\nSG:"
             node.name += ' ' + str(i) + ';'
     path = g.save_to_file(colors)
-    return template('subgraph_view', title='Результат поиска подгафов', subgraph_count=len(result),
-                    image_path=path)
+    return template('subgraph_view', title='Результат поиска подграфов', subgraph_count=len(result),
+                    image_path=path, clicks=result)

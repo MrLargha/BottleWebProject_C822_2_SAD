@@ -3,5 +3,21 @@
 <h2>{{title}}</h2>
 <h3>Найдено {{subgraph_count}} вхождений полных подграфов из 5 вершин</h3>
 
-<p>Связи чёрного цвета не входят ни в один полный подграф (клик)</p>
+<h4>Найденные полные подграфы</h4>
+<div class="box">
+    % for i, click in enumerate(clicks):
+    <div class="result-card" style="margin: 10px; padding: 10px">
+        <h5 style="text-align: center">Клик: {{i+1}}</h5>
+        <div class="table-container" style="margin: 10px; padding: 10px; border: none">
+            % for node in click:
+            <div class="result-card">
+                {{node.name[0]}}
+            </div>
+            %end
+        </div>
+    </div>
+    %end
+</div>
+
+<h4 style="margin-top: 20px">Связи чёрного цвета не входят ни в один полный подграф (клик)</h4>
 <img src="{{image_path}}"/>
