@@ -57,13 +57,15 @@ class Graph:
 
     """Сохранить граф в файл"""
 
-    def save_to_file(self, size_of_node=3000, size=12):
+    def save_to_file(self, size_of_node=3000, size=12, edge_colors=None):
+        if edge_colors is None:
+            edge_colors = ['r']
         G = nx.DiGraph()
         G.add_edges_from(self.get_edges_by_pairs())
         pos = nx.shell_layout(G)
         nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'), node_size=size_of_node, node_color='#8bc34a')
         nx.draw_networkx_labels(G, pos, font_size=size)
-        nx.draw_networkx_edges(G, pos, edge_color="r", arrows=self.oriented)
+        nx.draw_networkx_edges(G, pos, edge_color=edge_colors, arrows=self.oriented)
         filename = '.\\static\\' + str(uuid.uuid1()).replace('-', '') + '.png'
         fig: plt.Figure = plt.gcf()
         fig.set_size_inches(12, 12)
