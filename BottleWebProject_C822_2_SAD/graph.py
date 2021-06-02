@@ -32,19 +32,16 @@ class Graph:
         return Graph(mat)
 
     """Установить в false все отметки visited"""
-
     def reset_visited(self):
         for node in self.nodes:
             node.visited = False
 
     """Стереть метаданные"""
-
     def reset_metadata(self):
         for node in self.nodes:
             node.metadata = []
 
     """Вернуть количество компонент связности"""
-
     def get_connectivity_components_count(self):
         components = 0
         new_nodes = self.nodes
@@ -56,12 +53,14 @@ class Graph:
         return components
 
     """Сохранить граф в файл"""
-
     def save_to_file(self, size_of_node=3000, size=12, edge_colors=None):
         if edge_colors is None:
             edge_colors = ['r']
         G = nx.DiGraph()
-        G.add_edges_from(self.get_edges_by_pairs())
+        if len(self.nodes) == 1 and not self.nodes[0].connected_to(self.nodes[0], True):
+            G.add_node(self.nodes[0].name)
+        else:
+            G.add_edges_from(self.get_edges_by_pairs())
         pos = nx.shell_layout(G)
         nx.draw_networkx_nodes(G, pos, cmap=plt.get_cmap('jet'), node_size=size_of_node, node_color='#8bc34a')
         nx.draw_networkx_labels(G, pos, font_size=size)
@@ -91,15 +90,3 @@ class Graph:
     @staticmethod
     def get_nodes_names(count):
         return string.ascii_uppercase[:count]
-
-
-if __name__ == '__main__':
-    test_matrix = [[0, 1, 1, 0, 1, 1],
-                   [1, 0, 1, 1, 1, 0],
-                   [1, 1, 0, 1, 1, 0],
-                   [0, 1, 1, 0, 1, 1],
-                   [1, 1, 1, 1, 0, 0],
-                   [1, 0, 0, 1, 0, 0]]
-    g = Graph.create_from_path(Graph(test_matrix).find_euler_loop())
-    #print(Graph(test_matrix).find_euler_loop())
-    g.save_to_file()
