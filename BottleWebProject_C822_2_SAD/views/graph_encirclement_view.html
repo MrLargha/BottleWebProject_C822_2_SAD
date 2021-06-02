@@ -4,17 +4,17 @@
 <h3>Вершины с максимальным окружением: {{peak_count}} </h3>
 
 
-
 <div class="element-position-GE">
     <div>
         <img src="{{image_path}}" width="700" height="700" />
     </div>
     <div>
-        <table class="table-achievment">
+        <table cellpadding="10">
+        <caption class="table-achievment">Матрица достижимости для текущего графа</caption>
             %for i in range(0, len(ach_mtx)):
-            <tr></tr>
+                <tr class="table-achievment"></tr>
                 %for j in range(0, len(ach_mtx)):
-                <th class="table-achievment">{{ach_mtx[i,j]}}</th>
+                <td class="table-achievment">{{ach_mtx[i,j]}}</td>
                 %end
             %end
         </table>

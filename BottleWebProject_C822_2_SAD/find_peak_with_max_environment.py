@@ -16,8 +16,6 @@ def find_peak_with_max_env():
     level_count = int(request.forms.get("sergey_yarus"))#полчения числа ярусов
     peak_count=len(g.nodes)#получение числа вершин
     ones_matrix=np.eye(peak_count) #создание единичной матрицы
-
-    """Сделать страницы с выводом ошибки!"""
     one_bool=np.array(ones_matrix, dtype=bool)#преобразование ее в булеву матрицу для дальнейших операций
     total_bool_matrix=[]    #общая булева матрица
     for i in range(0, level_count): #цикл для создания булевых матриц, необходимых для нахождения матрицы достижимости
@@ -46,7 +44,7 @@ def find_peak_with_max_env():
     for i in range(0, len(list_with_env)):
         if list_with_env[i]==max_elem:
             point_with_max_environment.append(i+1)       
-    path = g.save_to_file(size=30)
+    path = g.save_to_file(size_of_node=1500,size=30)
     result_peak=str(point_with_max_environment)
     result_peak=result_peak[1:-1]
     return template('graph_encirclement_view', title='Результат поиска вершин с максимальным окружением', peak_count=result_peak,
@@ -55,8 +53,13 @@ def find_peak_with_max_env():
 
 @post('/graph_encirclement', method='post')
 def search():
-    matrix_dim = int(request.forms.get("MATRIX"))
-    level_count = int(request.forms.get("LEVEL"))
+    try:
+        matrix_dim = int(request.forms.get("MATRIX"))
+        level_count = int(request.forms.get("LEVEL"))
+        if level_count<0:
+            return template('error', message='Число ярусов не может быть меньше 0! Попробуйте еще раз!')
+    except ValueError:
+        return template('error', message='Введите кол-во вершин в графе!')
     return template('enter_matrix', title='Поиск вершин с максимальным окружением',
                     message='Задача Сергея Пластовца на поиск вершин с максимальным окружением',
                     year=datetime.now().year, rows=matrix_dim, columns=matrix_dim,
@@ -64,41 +67,3 @@ def search():
                     callback='find_peak_with_max_environment',
                     yarus=level_count)
 
-
-
-
-
-
-
-
-
-"""
-%import find_peak_with_max_environment
-%from graph import Graph
-%import GraphNode
-
-%test_matrix = [[0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-%[0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-%[0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-%[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-%[0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-%[0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
-%[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-%[0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-%[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-%[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
-%[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0],
-%[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-%[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-%[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-%[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-%[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-%[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-%g=Graph(test_matrix)
-%answ_matrix, max_peak=find_peak_with_max_environment.find_peak_with_max_env(g.matrix,len(g.nodes), 3)
-%image_path=g.save_to_file()
-<img src="{{image_path}}" />
-<h3>{{ answ_matrix }}</h3>
-<h3>{{ max_peak }}</h3>
-
-"""

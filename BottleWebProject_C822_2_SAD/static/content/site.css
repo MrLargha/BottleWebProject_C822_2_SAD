@@ -3,6 +3,33 @@ body {
     padding-bottom: 20px;
 }
 
+.pretty-h3 {
+    font-family: 'Linux Libertine','Georgia','Times',serif;
+    text-align: center;
+    margin-top: 30px
+}
+
+.pretty-p {
+    margin: 5px;
+    padding: 20px;
+    background-color: #eee;
+    border-style: solid;
+    border-width: 1px;
+    text-align: justify;
+    text-indent: 30px;
+    font-size: 16px
+}
+
+.pretty-h4 {
+    margin-top: 20px;
+    margin-left: 30px
+}
+
+.info-p{
+    margin-top: 10px;
+    font-size: 15px
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -83,7 +110,8 @@ input[type="checkbox"].input-validation-error {
 
 .element-position-GE {
     display: flex;
-    justify-content: space-around
+    justify-content: space-around;
+    align-items:center
 }
 
 .table-achievment {
