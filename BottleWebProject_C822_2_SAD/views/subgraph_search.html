@@ -1,15 +1,15 @@
 % rebase('layout.tpl', title=title, year=year)
 
-<h2 xmlns="http://www.w3.org/1999/html">{{ title }}</h2>
-<h3>{{ message }}</h3>
+<h2 style="text-align: center">{{ title }}</h2>
+<h3 class="pretty-h3">{{ message }}</h3>
 
-<h4 style="margin-top: 30px">Задача</h4>
-<p>Требуется найти заданный фрагмент в данном графе. Заданный фрагмент представляет собой полный граф из пяти вершин, степень каждой из которых равна четырем.</p>
-<h4 style="margin-top: 30px">О решении и алгоритме</h4>
-<p> Данная задача является модификацией <a href="https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B0_%D0%BE_%D0%BA%D0%BB%D0%B8%D0%BA%D0%B5">задачи о клике</a>.
-    Кликой в неориентированном графе называется подмножество вершин, каждые две из которых соединены ребром графа. Иными словами, это полный подграф первоначального графа.
+<h4 class="pretty-h4"><b>Задача</b></h4>
+<p class="info-p">Требуется найти заданный фрагмент в данном графе. Заданный фрагмент представляет собой полный граф из пяти вершин, степень каждой из которых равна четырем.</p>
+<h4 class="pretty-h4"><b>О решении и алгоритме</b></h4>
+<p class="info-p"> Данная задача является модификацией <a href="https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B0_%D0%BE_%D0%BA%D0%BB%D0%B8%D0%BA%D0%B5">задачи о клике</a>.
+    <p class="pretty-p"> Кликой в неориентированном графе называется подмножество вершин, каждые две из которых соединены ребром графа. Иными словами, это полный подграф первоначального графа. </p>
     Задача о клике является NP-полной, то есть пока не известно оптимального алгоритма её решения. В этой работе для решени был использован алгоритм быстрого нахождения всех клик - <a href="https://ru.wikipedia.org/wiki/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%91%D1%80%D0%BE%D0%BD%D0%B0_%E2%80%94_%D0%9A%D0%B5%D1%80%D0%B1%D0%BE%D1%88%D0%B0"> Алгоритм Брона-Кербоша</a></p>
-<h4 style="margin-top: 30px">Алгоритм</h4>
+<h4 class="pretty-h4"><b>Алгоритм</b></h4>
 <div style="font-family: monospace, monospace; tab-size: 4; background-color: #f8f9fa; border: 1px solid #eaecf0; line-height: 1.3;">
     <b>ПРОЦЕДУРА</b> extend (candidates, not):</p>
     <b>ПОКА</b> candidates НЕ пусто <b>И</b> not НЕ содержит вершины, СОЕДИНЕННОЙ СО ВСЕМИ вершинами из candidates,</p>
@@ -21,11 +21,11 @@
     5 <b>ИНАЧЕ</b> рекурсивно вызываем extend (new_candidates, new_not)</p>
   6 Удаляем v из compsub и candidates, и помещаем в not</p>
 </div>
-<h4 style="margin-top: 30px">Проверить работу алгоритма</h4>
-<p style="margin-top: 10px;">
+<h4 class="pretty-h4"><b>Проверить работу алгоритма</b></h4>
+<p class="info-p">
     Для начала работы введите кол-во вершин в графе, относительного которого будет решаться задача. После вы будете перенаправлены на странциу задания матрицы смежности.
 </p>
-<form class="form" method="post" action="/subgraph_search">
+<form class="form" method="post" action="/subgraph_search" style="text-align: center">
     <label>
         <p style="margin-top: 10px">Количество вершин графа</p>
         <input style="padding: 15px" type="number" class="nice-text-area" name="MATRIX" max="20" min="5">
