@@ -4,12 +4,18 @@ from datetime import datetime
 import numpy as np
 from bottle import route, post, template, request
 import request_utils
+import task_logger
+from task_logger import Logger
 
 
 @post('/find_peak_with_max_environment', method='post')
 #метод решения поставленной задачи
 def find_peak_with_max_env():
     matrix = request_utils.extract_matrix_from_request_params(request.forms)#полчение матрицы со страницы
+    #участок кода с логгированием
+    logger = Logger('graph_encirclement.log')
+    logger.push_log("Entered matrix: \n" + str(matrix).replace('[', '').replace(']', ''))
+    logger.push_log("Searching peak with max encirclement...")
     g=Graph(matrix)
     for i in range(0, len(g.nodes)):
         g.nodes[i].name=i+1
@@ -30,6 +36,8 @@ def find_peak_with_max_env():
     path = g.save_to_file(size_of_node=1500,size=30)
     result_peak=str(point_with_max_environment)
     result_peak=result_peak[1:-1]
+    logger.push_log("Reachability matrix: \n" + str(answer_matrix).replace('[', '').replace(']', ''))
+    logger.push_log("Peak's with max encirclement: " + str(result_peak))
     return template('graph_encirclement_view', title='Результат поиска вершин с максимальным окружением', peak_count=result_peak,
                     image_path=path, year=datetime.now().year, ach_mtx=answer_matrix)
 
