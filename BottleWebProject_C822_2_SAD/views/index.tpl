@@ -1,6 +1,6 @@
 % rebase('layout.tpl', title='Домашняя страница', year=year)
 
-<div class="jumbotron">
+<div class="jumbotron" style="border-radius: 15px;" >
     <h1>Математическое моделирование</h1>
     <p class="lead">Потрясающий сайт про математическое моделирование. Выполнен на УП 02. Содержит решения трёх задача</p>
     <p><a href="/about" class="btn btn-primary btn-large">Узнать об авторах</a></p>
