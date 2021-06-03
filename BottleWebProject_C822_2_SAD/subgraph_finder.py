@@ -3,7 +3,9 @@ from datetime import datetime
 from typing import List
 from bottle import post, template, request
 import request_utils
+import task_logger
 from graph import Graph, GraphNode
+from task_logger import Logger
 
 
 class ClickFinder:
@@ -88,9 +90,13 @@ def search():
 @post('/subgraph_matrix_entered', method='post')
 def solve():
     matrix = request_utils.extract_matrix_from_request_params(request.forms)
+    logger = Logger('subgraph.log')
+    logger.push_log("Entered matrix: \n" + str(matrix).replace('[', '').replace(']', ''))
+    logger.push_log("Searching for full graphs...")
     g = Graph(matrix)
     finder = ClickFinder(g)
     result = finder.find_clicks()
     print(result)
+    logger.push_log("Full subgraphs: " + str(result))
     return template('subgraph_view', title='Результат поиска подграфов', subgraph_count=len(result),
                     image_path=finder.save_result_to_file(), clicks=result)
