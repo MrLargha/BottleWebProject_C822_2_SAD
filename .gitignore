@@ -342,3 +342,6 @@ healthchecksdb
 # Virtual environments
 BottleWebProject_C822_2_SAD/env*
 /venv/
+
+# Pictures of graph's
+BottleWebProject_C822_2_SAD/static/*.png
