@@ -6,7 +6,6 @@ import bottle
 import os
 import sys
 
-import graph_show
 import subgraph_finder
 import euler_loop_handler
 import find_peak_with_max_environment \
