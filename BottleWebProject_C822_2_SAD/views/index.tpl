@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-md-4">
         <h2>Эйлеров цикл</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+        <p>Страница о поиске эйлерова пути в заданном графе. Для поиска используется алгоритм, схожий с поиском в глубину, однако пройденными отмечаются не вершины, а ребра. Ответом будем визуализированный граф с отмеченным эйлеровым путем</p>
         <p><a class="btn btn-default" href="/euler">Перейти &raquo;</a></p>
     </div>
     <div class="col-md-4">
