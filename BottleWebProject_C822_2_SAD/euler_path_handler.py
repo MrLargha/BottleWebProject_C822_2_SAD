@@ -2,18 +2,18 @@ from datetime import datetime
 from bottle import post, template, request
 import request_utils
 from graph import Graph
-from euler_loop_search import find_euler_loop
+from euler_path_search import find_euler_path
 
 
-@post('/eulerian_loop', method='post')
+@post('/eulerian_path', method='post')
 def search():
     try:
         matrix_dim = int(request.forms.get("MATRIX"))
     except:
         return template("error", message='Количество вершин не введено!')
 
-    return template('enter_matrix', title='Поиск эйлерового цикла в графе',
-                    message='Задача Дмитрия Повеличенко на поиск эйлерового цикла в графе',
+    return template('enter_matrix', title='Поиск Эйлерового пути в графе',
+                    message='Задача Дмитрия Повеличенко на поиск Эйлерового пути в графе',
                     year=datetime.now().year, rows=matrix_dim, columns=matrix_dim,
                     names=Graph.get_nodes_names(matrix_dim),
                     callback='euler_graph_entered',
@@ -24,7 +24,7 @@ def search():
 def enter_graph():
     matrix = request_utils.extract_matrix_from_request_params(request.forms)
     g = Graph(matrix)
-    res = find_euler_loop(g)
+    res = find_euler_path(g)
     path = ""
 
     if type(res) == list:
@@ -34,5 +34,5 @@ def enter_graph():
     else:
         msg = res
 
-    return template('euler_loop_view', title='Результат поиска ', message=msg,
+    return template('euler_path_view', title='Результат поиска ', message=msg,
                     image_path=path)

@@ -16,11 +16,11 @@ def home():
 
 
 @route('/euler')
-@view('eulerian_loop')
+@view('eulerian_path')
 def euler():
     return dict(
-        title='Эйлеров цикл',
-        message='Задача Дмитрия Повеличенко на поиск Эйлерова цикла',
+        title='Эйлеров путь',
+        message='Задача Дмитрия Повеличенко на поиск Эйлерова пути',
         year=datetime.now().year
     )
 

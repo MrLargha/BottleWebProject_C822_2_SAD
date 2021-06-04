@@ -7,7 +7,7 @@ import os
 import sys
 
 import subgraph_finder
-import euler_loop_handler
+import euler_path_handler
 import find_peak_with_max_environment \
  \
 # routes contains the HTTP handlers for our server and must be imported.
